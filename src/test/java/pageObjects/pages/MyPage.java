@@ -10,4 +10,20 @@ public class MyPage extends BaseForm {
     public MyPage() {
         super(avatar);
     }
+
+    public static Label getWallPost(String ownerId, int postIdFromResponse) {
+        return new Label(By.xpath(String.format("//div[@data-post-id='%s']", createFullPostId(ownerId, postIdFromResponse))), "Post");
+    }
+
+    public boolean wallPostIsFromRightUser(String ownerId, int postIdFromResponse) {
+        return getWallPost(ownerId, postIdFromResponse).isDisplayed();
+    }
+
+    private static String createFullPostId(String ownerId, int postIdFromResponse) {
+        return String.format("%s_%d", ownerId, postIdFromResponse);
+    }
+
+    public String getWallPostText(String ownerId, int postIdFromResponse){
+        return getWallPost(ownerId, postIdFromResponse).getText();
+    }
 }

@@ -1,10 +1,7 @@
 package tests;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import constants.ApiInfo;
-import constants.URLs;
-import constants.UsersInfo;
-import constants.VkMethods;
+import constants.*;
 import framework.browser.Browser;
 import framework.utils.PropertiesRead;
 import models.VkUser;
@@ -23,30 +20,38 @@ import java.util.UUID;
 public class TC1 {
     private static final Logger LOG = Logger.getLogger(TC1.class);
     private String randomText = UUID.randomUUID().toString();
+
     @BeforeTest
-    public void init(){
+    public void init() {
         PropertyConfigurator.configure(PropertiesRead.readFromFrameworkConfig("logfile"));
         Browser.getBrowser();
         Browser.setImplicitlyWait();
         Browser.goToUrl(URLs.VK_COM);
         Browser.maximize();
     }
+
     @Test
-    public void vkTest(){
+    public void vkTest() {
         LoginPage loginPage = new LoginPage();
-        LOG.info("Check if login page is open");
+        LOG.info("Checks if login page is open");
         Assert.assertTrue(loginPage.isPageDisplayed(), "Page is not open");
         VkUser vkUser = new VkUser(UsersInfo.FIRST_USER_USERNAME, UsersInfo.FIRST_USER_PASSWORD, UsersInfo.FIRST_USER_ID);
         LOG.info("Authorizing User1");
         loginPage.getAuthorization().logOn(vkUser);
         UserFeed userFeed = new UserFeed();
-        LOG.info("Check if user feed page is open");
+        LOG.info("Checks if user feed page is open");
         Assert.assertTrue(userFeed.isPageDisplayed(), "Wrong user creds");
         LOG.info("My page click");
         userFeed.getMenu().getGoToMyPage().click();
         MyPage myPage = new MyPage();
-        LOG.info("Check if My page is open");
+        LOG.info("Checks if My page is open");
         Assert.assertTrue(myPage.isPageDisplayed(), "My page is not open");
-        JsonNode jsonNode = VkApiUtils.createWallPost(vkUser, String.format(URLs.DEV_VK_API, VkMethods.WALL_POST), ApiInfo.ACCESS_TOKEN, ApiInfo.API_VERSION, randomText);
+        LOG.info("Gets response from posting wall post");
+        JsonNode jsonNode = VkApiUtils.createWallPost(vkUser.getId(), randomText);
+        LOG.info("Gets post id");
+        int postId = jsonNode.get(Fields.RESPONSE).get(Fields.POST_ID).asInt();
+        LOG.info("Checks if Post is from right user");
+        Assert.assertTrue(myPage.wallPostIsFromRightUser(vkUser.getId(), postId), "Post is not from right user");
+        Assert.assertTrue(myPage.getWallPostText(vkUser.getId(), postId).contains(randomText),"Texts are different");
     }
 }
