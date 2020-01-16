@@ -59,19 +59,9 @@ public class Browser {
         getBrowser().manage().timeouts().implicitlyWait(TIMEOUT, TimeUnit.SECONDS);
     }
 
-
-    public static void alertAccept() {
-        log.info("click on the 'OK' button of the alert");
-        getBrowser().switchTo().alert().accept();
+    public static String getCurrentUrl(){
+        log.info("Getting current Url");
+        return getBrowser().getCurrentUrl();
     }
 
-    public static String getAlertText() {
-        log.info("getting alert text");
-        return getBrowser().switchTo().alert().getText();
-    }
-
-    public static void sendKeysAlert(String text) {
-        log.info("typing " + text);
-        getBrowser().switchTo().alert().sendKeys(text);
-    }
 }

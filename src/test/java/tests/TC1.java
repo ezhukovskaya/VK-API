@@ -1,16 +1,12 @@
 package tests;
 
-import builders.PhotoUploadBuilder;
 import com.fasterxml.jackson.databind.JsonNode;
-import constants.*;
+import constants.Fields;
+import constants.UsersInfo;
 import enums.LikeStatus;
-import framework.browser.Browser;
-import framework.utils.PropertiesRead;
 import models.VkUser;
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 import org.testng.Assert;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pageObjects.pages.LoginPage;
 import pageObjects.pages.MyPage;
@@ -19,19 +15,10 @@ import utils.VkApiUtils;
 
 import java.util.UUID;
 
-public class TC1 {
+public class TC1 extends BaseTest{
     private static final Logger LOG = Logger.getLogger(TC1.class);
     private String randomText = UUID.randomUUID().toString();
     private String imagePath = System.getProperty("user.dir") + "/src/test/java/resources/photo.jpg";
-
-    @BeforeTest
-    public void init() {
-        PropertyConfigurator.configure(PropertiesRead.readFromFrameworkConfig("logfile"));
-        Browser.getBrowser();
-        Browser.setImplicitlyWait();
-        Browser.goToUrl(URLs.VK_COM);
-        Browser.maximize();
-    }
 
     @Test
     public void vkTest() {

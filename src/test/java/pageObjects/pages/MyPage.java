@@ -5,6 +5,8 @@ import framework.elements.Button;
 import framework.elements.Label;
 import models.VkUser;
 import org.openqa.selenium.By;
+import pageObjects.forms.Header;
+import pageObjects.forms.Options;
 
 public class MyPage extends BaseForm {
     private static Label avatar = new Label(By.xpath("//img[contains(@class, 'page_avatar_img')]"), "Page Avatar Img");
@@ -13,6 +15,10 @@ public class MyPage extends BaseForm {
 
     public MyPage() {
         super(avatar);
+    }
+
+    public Header getHeader(){
+        return new Header();
     }
 
     public static Label getWallPost(VkUser vkUser, int postIdFromResponse) {
