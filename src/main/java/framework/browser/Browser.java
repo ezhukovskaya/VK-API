@@ -63,8 +63,4 @@ public class Browser {
         log.info("Getting current Url");
         return getBrowser().getCurrentUrl();
     }
-
-    public static void get(String link){
-        getBrowser().get(link);
-    }
 }

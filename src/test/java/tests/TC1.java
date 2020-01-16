@@ -26,7 +26,7 @@ public class TC1 extends BaseTest{
         LoginPage loginPage = new LoginPage();
         LOG.info("Checks if login page is open");
         Assert.assertTrue(loginPage.isPageDisplayed(), "Page is not open");
-        VkUser vkUser = new VkUser(UsersInfo.FIRST_USER_USERNAME, UsersInfo.FIRST_USER_PASSWORD, UsersInfo.FIRST_USER_ID, ApiInfo.ACCESS_TOKEN_USER1);
+        VkUser vkUser = new VkUser(UsersInfo.FIRST_USER_USERNAME, UsersInfo.FIRST_USER_PASSWORD, ApiInfo.ACCESS_TOKEN_USER1);
         LOG.info("Authorizing User1");
         loginPage.getAuthorization().logOn(vkUser);
         UserFeed userFeed = new UserFeed();
@@ -38,7 +38,7 @@ public class TC1 extends BaseTest{
         LOG.info("Checks if My page is open");
         Assert.assertTrue(myPage.isPageDisplayed(), "My page is not open");
         LOG.info("Gets response from posting wall post");
-        JsonNode jsonNode = VkApiUtils.createWallPost(vkUser.getId(), randomText);
+        JsonNode jsonNode = VkApiUtils.createWallPost(vkUser.getId(), randomText, vkUser);
         LOG.info("Gets post id");
         int postId = jsonNode.get(Fields.RESPONSE).get(Fields.POST_ID).asInt();
         LOG.info("Checks if Post is from right user");
@@ -47,7 +47,7 @@ public class TC1 extends BaseTest{
         Assert.assertTrue(myPage.getWallPostText(vkUser, postId).contains(randomText), "Texts are different");
         //jsonNode = VkApiUtils.createWallPostEdit(vkUser.getId(), postId, "qwerty", PhotoUploadBuilder.getPhotoFromSavePhotoRequest(vkUser.getId(), imagePath));
         LOG.info("Gets response from posting wall post comment");
-        jsonNode = VkApiUtils.createWallPostComment(postId, randomText);
+        jsonNode = VkApiUtils.createWallPostComment(postId, randomText, vkUser);
         LOG.info("Gets comment id");
         int commentId = jsonNode.get(Fields.RESPONSE).get(Fields.COMMENT_ID).asInt();
         LOG.info("Checks if Comment is from right user");
@@ -55,12 +55,12 @@ public class TC1 extends BaseTest{
         LOG.info("Like post");
         myPage.likePost();
         LOG.info(String.format("Gets response from checking like status for post id=%d", postId));
-        jsonNode = VkApiUtils.createIsLikedRequest(vkUser.getId(), vkUser.getId(), postId);
+        jsonNode = VkApiUtils.createIsLikedRequest(vkUser.getId(), vkUser.getId(), postId, vkUser);
         int liked = jsonNode.get(Fields.RESPONSE).get(Fields.LIKED).asInt();
         LOG.info("Checks if like status is 'LIKED'");
         Assert.assertEquals(liked, LikeStatus.LIKED.getValue(), String.format("User id=%s did not like item id=%d", vkUser.getId(), postId));
         LOG.info("Gets response from deleting wall post");
-        VkApiUtils.createWallPostDeleteRequest(vkUser.getId(), postId);
+        VkApiUtils.createWallPostDeleteRequest(vkUser.getId(), postId, vkUser);
         Assert.assertFalse(myPage.wallPostIsFromRightUser(vkUser, postId), String.format("Post id=%d is not deleted", postId));
     }
 }

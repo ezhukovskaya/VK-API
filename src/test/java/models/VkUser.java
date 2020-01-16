@@ -10,6 +10,5 @@ import lombok.NoArgsConstructor;
 public class VkUser {
     private String username;
     private String password;
-    private String id;
     private String accessToken;
 }
