@@ -1,5 +1,6 @@
 package tests;
 
+import builders.PhotoUploadBuilder;
 import com.fasterxml.jackson.databind.JsonNode;
 import constants.*;
 import framework.browser.Browser;
@@ -31,7 +32,7 @@ public class TC1 {
     }
 
     @Test
-    public void vkTest() {
+    public void vkTest() throws InterruptedException {
         LoginPage loginPage = new LoginPage();
         LOG.info("Checks if login page is open");
         Assert.assertTrue(loginPage.isPageDisplayed(), "Page is not open");
@@ -52,6 +53,9 @@ public class TC1 {
         int postId = jsonNode.get(Fields.RESPONSE).get(Fields.POST_ID).asInt();
         LOG.info("Checks if Post is from right user");
         Assert.assertTrue(myPage.wallPostIsFromRightUser(vkUser.getId(), postId), "Post is not from right user");
-        Assert.assertTrue(myPage.getWallPostText(vkUser.getId(), postId).contains(randomText),"Texts are different");
+        LOG.info(String.format("Checks if Post message matches %s", randomText));
+        Assert.assertTrue(myPage.getWallPostText(vkUser.getId(), postId).contains(randomText), "Texts are different");
+        jsonNode = VkApiUtils.createWallPostEdit(vkUser.getId(), postId, "qwerty", "photo100172_166443618");
+        System.out.println(PhotoUploadBuilder.getPhoto(vkUser.getId(), "D:\\A1QA\\VK\\src\\test\\java\\resources\\photo.jpg"));
     }
 }
