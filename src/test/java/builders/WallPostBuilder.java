@@ -17,12 +17,16 @@ public class WallPostBuilder extends BaseBuilder {
         return String.format(Parametres.ATTACHMENT, attachment);
     }
 
-    public static String getURL(String id, String message) {
+    public static String getWallPostRequest(String id, String message) {
         return String.format(createMethod(VkMethods.WALL_POST), createAccessToken() + AMP + createVersion() + AMP + createOwnerId(id) + AMP + createMessage(message));
     }
 
-    public static String getURL(String id, int postId, String message, String attachment) {
+    public static String getEditPostRequest(String id, int postId, String message, String attachment) {
         return String.format(createMethod(VkMethods.WALL_EDIT), createAccessToken() + AMP + createVersion() + AMP + createOwnerId(id) + AMP + createPostId(postId) + AMP + createMessage(message) + AMP + createAttachment(attachment));
+    }
+
+    public static String getAddCommentRequest(int postId, String commentText){
+        return String.format(createMethod(VkMethods.CREATE_COMMENT), createAccessToken() + AMP + createVersion() + AMP + createMessage(commentText) + AMP + createPostId(postId));
     }
 
 }

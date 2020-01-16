@@ -9,4 +9,8 @@ public class Parametres {
     public static final String POST_ID = "post_id=%d";
     public static final String GROUP_ID = "group_id=%s";
     public static final String FILE = "file=%s";
+    public static final String PHOTO = "photo=%s";
+    public static final String USER_ID = "user_id=%s";
+    public static final String ITEM_ID = "item_id=%d";
+    public static final String TYPE = "type=%s";
 }

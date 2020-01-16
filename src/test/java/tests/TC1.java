@@ -3,6 +3,7 @@ package tests;
 import builders.PhotoUploadBuilder;
 import com.fasterxml.jackson.databind.JsonNode;
 import constants.*;
+import enums.LikeStatus;
 import framework.browser.Browser;
 import framework.utils.PropertiesRead;
 import models.VkUser;
@@ -21,6 +22,7 @@ import java.util.UUID;
 public class TC1 {
     private static final Logger LOG = Logger.getLogger(TC1.class);
     private String randomText = UUID.randomUUID().toString();
+    private String imagePath = System.getProperty("user.dir") + "/src/test/java/resources/photo.jpg";
 
     @BeforeTest
     public void init() {
@@ -52,10 +54,22 @@ public class TC1 {
         LOG.info("Gets post id");
         int postId = jsonNode.get(Fields.RESPONSE).get(Fields.POST_ID).asInt();
         LOG.info("Checks if Post is from right user");
-        Assert.assertTrue(myPage.wallPostIsFromRightUser(vkUser.getId(), postId), "Post is not from right user");
+        Assert.assertTrue(myPage.wallPostIsFromRightUser(vkUser, postId), String.format("Post is not from %s", vkUser.getUsername()));
         LOG.info(String.format("Checks if Post message matches %s", randomText));
-        Assert.assertTrue(myPage.getWallPostText(vkUser.getId(), postId).contains(randomText), "Texts are different");
-        jsonNode = VkApiUtils.createWallPostEdit(vkUser.getId(), postId, "qwerty", "photo100172_166443618");
-        System.out.println(PhotoUploadBuilder.getPhoto(vkUser.getId(), "D:\\A1QA\\VK\\src\\test\\java\\resources\\photo.jpg"));
+        Assert.assertTrue(myPage.getWallPostText(vkUser, postId).contains(randomText), "Texts are different");
+        //jsonNode = VkApiUtils.createWallPostEdit(vkUser.getId(), postId, "qwerty", PhotoUploadBuilder.getPhotoFromSavePhotoRequest(vkUser.getId(), imagePath));
+        LOG.info("Gets response from posting wall post comment");
+        jsonNode = VkApiUtils.createWallPostComment(postId, randomText);
+        LOG.info("Gets comment id");
+        int commentId = jsonNode.get(Fields.RESPONSE).get(Fields.COMMENT_ID).asInt();
+        LOG.info("Checks if Comment is from right user");
+        Assert.assertTrue(myPage.commentIsFromRightUser(vkUser, commentId), String.format("Comment is not from %s", vkUser.getUsername()));
+        LOG.info("Like post");
+        myPage.likePost();
+        LOG.info(String.format("Gets response from checking like status for post id=%d", postId));
+        jsonNode = VkApiUtils.createIsLikedRequest(vkUser.getId(), vkUser.getId(), postId);
+        int liked = jsonNode.get(Fields.RESPONSE).get(Fields.LIKED).asInt();
+        LOG.info("Checks if like status is 'LIKED'");
+        Assert.assertEquals(liked, LikeStatus.LIKED.getValue(), String.format("User id=%s did not like item id=%d", vkUser.getId(), postId));
     }
 }
