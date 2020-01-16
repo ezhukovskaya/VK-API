@@ -15,8 +15,8 @@ abstract public class BaseBuilder {
         return String.format(Parametres.GROUP_ID, id);
     }
 
-    protected static String createAccessToken() {
-        return String.format(Parametres.ACCESS_TOKEN, ApiInfo.ACCESS_TOKEN);
+    protected static String createAccessToken(String accessToken) {
+        return String.format(Parametres.ACCESS_TOKEN, accessToken);
     }
 
     protected static String createVersion() {

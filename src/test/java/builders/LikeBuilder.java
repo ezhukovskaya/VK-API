@@ -3,6 +3,7 @@ package builders;
 import constants.Parametres;
 import constants.VkMethods;
 import enums.ItemType;
+import models.VkUser;
 
 public class LikeBuilder extends BaseBuilder {
     private static String createUserId(String userId) {
@@ -17,8 +18,8 @@ public class LikeBuilder extends BaseBuilder {
         return String.format(Parametres.TYPE, type);
     }
 
-    public static String createIsPostLikedRequest(String ownerId, String userId, int itemId) {
+    public static String createIsPostLikedRequest(String ownerId, String userId, int itemId, VkUser user) {
         return String.format(createMethod(VkMethods.IS_LIKED),
-                createAccessToken() + AMP + createVersion() + AMP + createOwnerId(ownerId) + AMP + createUserId(userId) + AMP + createItemId(itemId) + AMP + createType(ItemType.POST.name().toLowerCase()));
+                createAccessToken(user.getAccessToken()) + AMP + createVersion() + AMP + createOwnerId(ownerId) + AMP + createUserId(userId) + AMP + createItemId(itemId) + AMP + createType(ItemType.POST.name().toLowerCase()));
     }
 }

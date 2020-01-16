@@ -64,4 +64,7 @@ public class Browser {
         return getBrowser().getCurrentUrl();
     }
 
+    public static void get(String link){
+        getBrowser().get(link);
+    }
 }

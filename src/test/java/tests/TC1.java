@@ -1,6 +1,7 @@
 package tests;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import constants.ApiInfo;
 import constants.Fields;
 import constants.UsersInfo;
 import enums.LikeStatus;
@@ -25,7 +26,7 @@ public class TC1 extends BaseTest{
         LoginPage loginPage = new LoginPage();
         LOG.info("Checks if login page is open");
         Assert.assertTrue(loginPage.isPageDisplayed(), "Page is not open");
-        VkUser vkUser = new VkUser(UsersInfo.FIRST_USER_USERNAME, UsersInfo.FIRST_USER_PASSWORD, UsersInfo.FIRST_USER_ID);
+        VkUser vkUser = new VkUser(UsersInfo.FIRST_USER_USERNAME, UsersInfo.FIRST_USER_PASSWORD, UsersInfo.FIRST_USER_ID, ApiInfo.ACCESS_TOKEN_USER1);
         LOG.info("Authorizing User1");
         loginPage.getAuthorization().logOn(vkUser);
         UserFeed userFeed = new UserFeed();
