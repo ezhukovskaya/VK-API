@@ -46,4 +46,8 @@ public class VkApiUtils {
     public static JsonNode createIsLikedRequest(String ownerId, String userId, int itemId){
         return getResponse(LikeBuilder.createIsPostLikedRequest(ownerId, userId, itemId));
     }
+
+    public static JsonNode createWallPostDeleteRequest(String ownerId, int postId){
+        return getResponse(WallPostBuilder.getDeleteWallPostRequest(ownerId, postId));
+    }
 }

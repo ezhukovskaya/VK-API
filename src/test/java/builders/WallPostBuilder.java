@@ -29,4 +29,8 @@ public class WallPostBuilder extends BaseBuilder {
         return String.format(createMethod(VkMethods.CREATE_COMMENT), createAccessToken() + AMP + createVersion() + AMP + createMessage(commentText) + AMP + createPostId(postId));
     }
 
+    public static String getDeleteWallPostRequest(String ownerId, int postId){
+        return String.format(createMethod(VkMethods.DELETE), createAccessToken() + AMP + createVersion() + AMP + createOwnerId(ownerId) + AMP + createPostId(postId));
+    }
+
 }

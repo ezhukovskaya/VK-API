@@ -34,7 +34,7 @@ public class TC1 {
     }
 
     @Test
-    public void vkTest() throws InterruptedException {
+    public void vkTest() {
         LoginPage loginPage = new LoginPage();
         LOG.info("Checks if login page is open");
         Assert.assertTrue(loginPage.isPageDisplayed(), "Page is not open");
@@ -71,5 +71,8 @@ public class TC1 {
         int liked = jsonNode.get(Fields.RESPONSE).get(Fields.LIKED).asInt();
         LOG.info("Checks if like status is 'LIKED'");
         Assert.assertEquals(liked, LikeStatus.LIKED.getValue(), String.format("User id=%s did not like item id=%d", vkUser.getId(), postId));
+        LOG.info("Gets response from deleting wall post");
+        VkApiUtils.createWallPostDeleteRequest(vkUser.getId(), postId);
+        Assert.assertFalse(myPage.wallPostIsFromRightUser(vkUser, postId), String.format("Post id=%d is not deleted", postId));
     }
 }
