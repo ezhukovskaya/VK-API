@@ -12,11 +12,6 @@ public class TextBox extends BaseElement {
         super(locator, name);
     }
 
-    public void clear() {
-        log.info("TextBox is cleared");
-        Browser.getBrowser().findElement(elementLocator).clear();
-    }
-
     public void sendKeys(String text) {
         log.info("TextBox takes " + text);
         Browser.getBrowser().findElement(elementLocator).sendKeys(text);

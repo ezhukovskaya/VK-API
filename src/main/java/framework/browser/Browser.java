@@ -1,14 +1,12 @@
 package framework.browser;
 
 import framework.utils.PropertiesRead;
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class Browser {
@@ -25,19 +23,6 @@ public class Browser {
             driver = BrowserFactory.getBrowser();
         }
         return driver;
-    }
-
-    public static void takeScreenshot(String path) {
-        log.info("Taking screenshot");
-        TakesScreenshot screenshot = ((TakesScreenshot) getBrowser());
-        log.info("Inserting image into the file PNG");
-        File image = screenshot.getScreenshotAs(OutputType.FILE);
-        File destFile = new File(path);
-        try {
-            FileUtils.copyFile(image, destFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public static void goToUrl(String url) {
