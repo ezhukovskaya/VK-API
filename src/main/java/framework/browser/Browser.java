@@ -3,9 +3,9 @@ package framework.browser;
 import framework.utils.PropertiesRead;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,9 +14,10 @@ import java.util.concurrent.TimeUnit;
 public class Browser {
     private static WebDriver driver;
     private static final int TIMEOUT = Integer.parseInt(PropertiesRead.readFromFrameworkConfig("implicitlyTimeout"));
+    private static final int EXPLICIT_TIMEOUT = Integer.parseInt(PropertiesRead.readFromFrameworkConfig("explicitTimeout"));
 
 
-    static final Logger log = Logger.getLogger(Browser.class);
+    private static final Logger log = Logger.getLogger(Browser.class);
 
 
     public static WebDriver getBrowser() {
@@ -57,6 +58,10 @@ public class Browser {
     public static void setImplicitlyWait() {
         log.info("Timeout is " + TIMEOUT);
         getBrowser().manage().timeouts().implicitlyWait(TIMEOUT, TimeUnit.SECONDS);
+    }
+
+    public static void setExplicitWait(By by){
+        (new WebDriverWait(getBrowser(), EXPLICIT_TIMEOUT)).until(ExpectedConditions.presenceOfElementLocated(by));
     }
 
     public static String getCurrentUrl(){

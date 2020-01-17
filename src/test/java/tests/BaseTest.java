@@ -1,6 +1,6 @@
 package tests;
 
-import constants.URLs;
+import application.constants.URLs;
 import framework.browser.Browser;
 import framework.utils.PropertiesRead;
 import org.apache.log4j.PropertyConfigurator;
