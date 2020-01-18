@@ -20,6 +20,21 @@ public class VkApiUtils {
         return null;
     }
 
+    private static JsonNode getResponse(String url, String fileSrc){
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            com.mashape.unirest.http.JsonNode response = ApiUtils.postRequest(url, fileSrc);
+            return objectMapper.readValue(response.toString(), JsonNode.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static JsonNode photoResponse(String url, String fileSrc){
+        return getResponse(url, fileSrc);
+    }
+
     public static JsonNode createWallPost(String id, String message, VkUser vkUser) {
         return getResponse(WallPostBuilder.getWallPostRequest(id, message, vkUser));
     }
@@ -32,12 +47,8 @@ public class VkApiUtils {
         return getResponse(WallPostBuilder.getEditPostRequest(id, postId, message, attachment,vkUser ));
     }
 
-    public static JsonNode createPhotoUpload(String id, String fileSrc, VkUser vkUser) {
-        return getResponse(PhotoUploadBuilder.createUploadUrl(id, fileSrc, vkUser));
-    }
-
-    public static JsonNode createSaveWallPhoto(String id, String fileSrc, VkUser vkUser) {
-        return getResponse(PhotoUploadBuilder.getSaveWallPhotoRequest(id, fileSrc, vkUser));
+    public static JsonNode createWallSavePhotoRequest(String photo, VkUser user){
+        return getResponse(PhotoUploadBuilder.getSaveWallPhotoRequest(photo, user));
     }
 
     public static JsonNode createWallPostComment(int postId, String commentText, VkUser vkUser) {
