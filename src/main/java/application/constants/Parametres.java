@@ -13,4 +13,7 @@ public class Parametres {
     public static final String USER_ID = "user_id=%s";
     public static final String ITEM_ID = "item_id=%d";
     public static final String TYPE = "type=%s";
+    public static final String HASH = "hash=%s";
+    public static final String SERVER = "server=%s";
+    public static final String MEDIA_ID = "media_id=%s";
 }

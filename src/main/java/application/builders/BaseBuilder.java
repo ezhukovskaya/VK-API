@@ -1,11 +1,22 @@
 package application.builders;
 
+import application.constants.Fields;
 import application.constants.Parametres;
 import application.constants.URLs;
 import application.constants.ApiInfo;
+import application.models.VkUser;
+import application.utils.VkApiUtils;
 
 abstract public class BaseBuilder {
     protected static final String AMP = "&";
+
+    protected static String getUploadUrl(String id, VkUser vkUser) {
+        return VkApiUtils.createWallUploadServer(id, vkUser).get(Fields.RESPONSE).get(Fields.UPLOAD_URL).textValue();
+    }
+
+    public static String createUploadUrl(String id, VkUser vkUser) {
+        return getUploadUrl(id, vkUser);
+    }
 
     protected static String createOwnerId(String id) {
         return String.format(Parametres.OWNER_ID, id);
@@ -17,6 +28,10 @@ abstract public class BaseBuilder {
 
     protected static String createPhoto(String photo) {
         return String.format(Parametres.PHOTO, photo);
+    }
+
+    protected static String createField(String key, String value) {
+        return String.format(key, value);
     }
 
     protected static String createAccessToken(String accessToken) {
