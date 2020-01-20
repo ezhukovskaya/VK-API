@@ -6,5 +6,9 @@ import org.openqa.selenium.By;
 
 @Data
 public class Menu {
-    private Button goToMyPage = new Button(By.xpath("//li[@id='l_pr']"), "My profile");
+    private Button goToMyPage = getButton("l_pr", "My profile");
+
+    public Button getButton(String id, String name) {
+        return new Button(By.xpath(String.format("//li[@id='%s']", id)), name);
+    }
 }

@@ -1,21 +1,19 @@
 package application.builders;
 
+import application.constants.ApiInfo;
 import application.constants.Fields;
 import application.constants.Parametres;
 import application.constants.URLs;
-import application.constants.ApiInfo;
-import application.models.VkUser;
 import application.utils.VkApiUtils;
+import org.apache.log4j.Logger;
 
 abstract public class BaseBuilder {
+    private static final Logger LOG = Logger.getLogger(BaseBuilder.class);
     protected static final String AMP = "&";
 
     protected static String getUploadUrl(String url) {
+        LOG.info(String.format("Get upload URL for %s ", url));
         return VkApiUtils.createWallUploadServer(url).get(Fields.RESPONSE).get(Fields.UPLOAD_URL).textValue();
-    }
-
-    protected static String getDocUploadUrl(String id, VkUser vkUser){
-        return VkApiUtils.createDocUploadServer(id, vkUser).get(Fields.RESPONSE).get(Fields.UPLOAD_URL).textValue();
     }
 
     public static String createUploadUrl(String url) {

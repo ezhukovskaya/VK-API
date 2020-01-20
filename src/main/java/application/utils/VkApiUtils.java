@@ -5,10 +5,13 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import framework.utils.ApiUtils;
 import application.models.VkUser;
+import org.apache.log4j.Logger;
 
 public class VkApiUtils {
+    private static final Logger LOG = Logger.getLogger(VkApiUtils.class);
     private static JsonNode getResponse(String url) {
         ObjectMapper objectMapper = new ObjectMapper();
+        LOG.info("Gets response body");
         try {
             String response = ApiUtils.postRequest(url);
             return objectMapper.readValue(response, JsonNode.class);
@@ -20,6 +23,7 @@ public class VkApiUtils {
 
     private static JsonNode getResponse(String field, String url, String fileSrc) {
         ObjectMapper objectMapper = new ObjectMapper();
+        LOG.info("Gets response body");
         try {
             com.mashape.unirest.http.JsonNode response = ApiUtils.postRequest(field, url, fileSrc);
             return objectMapper.readValue(response.toString(), JsonNode.class);

@@ -45,11 +45,12 @@ public class Browser {
         getBrowser().manage().timeouts().implicitlyWait(TIMEOUT, TimeUnit.SECONDS);
     }
 
-    public static void setExplicitWait(By by){
+    public static void setExplicitWait(By by) {
+        log.info("Timeout is " + EXPLICIT_TIMEOUT);
         (new WebDriverWait(getBrowser(), EXPLICIT_TIMEOUT)).until(ExpectedConditions.presenceOfElementLocated(by));
     }
 
-    public static String getCurrentUrl(){
+    public static String getCurrentUrl() {
         log.info("Getting current Url");
         return getBrowser().getCurrentUrl();
     }

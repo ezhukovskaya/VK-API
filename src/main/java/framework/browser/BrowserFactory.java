@@ -19,24 +19,24 @@ import java.util.HashMap;
 
 
 public class BrowserFactory {
-    private static final Logger log = Logger.getLogger(BrowserFactory.class);
+    private static final Logger LOG = Logger.getLogger(BrowserFactory.class);
 
 
     public static WebDriver getBrowser() {
         String language = PropertiesRead.readFromFrameworkConfig("language");
         String browserName = PropertiesRead.readFromFrameworkConfig("browser");
         String remoteStatusName = PropertiesRead.readFromFrameworkConfig("remote");
-        log.info("Language of web-site is " + language);
+        LOG.info("Language of web-site is " + language);
         BrowserList browserList = BrowserList.valueOf(browserName.toUpperCase());
         RemoteStatus remoteStatus = RemoteStatus.valueOf(remoteStatusName.toUpperCase());
         switch (remoteStatus) {
             case LOCAL:
                 switch (browserList) {
                     case CHROME:
-                        log.info("Chosen browser is chrome");
+                        LOG.info("Chosen browser is chrome");
                         return getChromeInstance(language);
                     case FIREFOX:
-                        log.info("Chosen browser is firefox");
+                        LOG.info("Chosen browser is firefox");
                         return getFirefoxInstance(language);
                     default:
                         throw new IllegalStateException("Incorrect browser name in configuration file");

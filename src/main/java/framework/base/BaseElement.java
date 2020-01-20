@@ -32,6 +32,7 @@ public abstract class BaseElement {
     }
 
     public String getText() {
+        log.info("Get text from element");
         return getElement().getText();
     }
 

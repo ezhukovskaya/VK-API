@@ -9,7 +9,7 @@ import org.openqa.selenium.By;
 public class Post {
     private static Button nextReplies;
 
-    public Button getLikeButton(String ownerId, int postId){
+    public Button getLikeButton(String ownerId, int postId) {
         return new Button(By.xpath(String.format("%s//div[contains(@class,'like_button_icon')]", getDataPostId(ownerId, postId))), "Like");
     }
 
@@ -44,7 +44,7 @@ public class Post {
     public String getWallPostText(String userId, int postIdFromResponse) {
         By by = By.xpath(String.format("%s//div[contains(@class, 'wall_post_text')]", getDataPostId(userId, postIdFromResponse)));
         Browser.setExplicitWait(by);
-        return new Label(by,"Text").getText();
+        return new Label(by, "Text").getText();
     }
 
     public void likePost(String ownerId, int postId) {

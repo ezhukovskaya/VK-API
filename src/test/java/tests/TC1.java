@@ -17,8 +17,8 @@ import java.util.UUID;
 public class TC1 extends BaseTest {
     private static final Logger LOG = Logger.getLogger(TC1.class);
     private String imagePath = System.getProperty("user.dir") + "/src/main/java/application/resources/photo.jpg";
-    private String imageUrl = "https://vk.com/photo%s_%s";
     private String randomText = UUID.randomUUID().toString();
+    private final String NEW_TEXT = "MEOWMEOWMEOW!!!!!!!";
 
     @Test
     public void vkTest() {
@@ -31,7 +31,9 @@ public class TC1 extends BaseTest {
         Assert.assertTrue(myPageFirstUser.getPost().wallPostIsFromRightUser(firstUserId, postId), String.format("Post is not from %s", firstUser.getUsername()));
         LOG.info(String.format("Checks if Post message matches %s", randomText));
         Assert.assertEquals(randomText, myPageFirstUser.getPost().getWallPostText(firstUserId, postId), "Texts are different");
-        Steps.postEditedWithPhotoWallPost(imagePath, firstUserId, firstUserId, firstUser, postId, "qwerty", Fields.PHOTO);
+        LOG.info("Checks if the pic is the same as local");
+        Assert.assertTrue(Steps.postEditedWithPhotoWallPost(imagePath, firstUserId, firstUserId, firstUser, postId, NEW_TEXT, Fields.PHOTO), "Pics are different");
+        LOG.info("Checks if randomText is not the same");
         Assert.assertNotEquals(randomText, myPageFirstUser.getPost().getWallPostText(firstUserId, postId));
         int commentId = Steps.getWallCommentId(postId, firstUser);
         LOG.info("Checks if Comment is from right user");
