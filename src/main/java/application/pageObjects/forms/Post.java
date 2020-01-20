@@ -1,6 +1,7 @@
 package application.pageObjects.forms;
 
 import application.models.VkUser;
+import framework.browser.Browser;
 import framework.elements.Button;
 import framework.elements.Label;
 import org.openqa.selenium.By;
@@ -41,7 +42,9 @@ public class Post {
     }
 
     public String getWallPostText(String userId, int postIdFromResponse) {
-        return getWallPost(userId, postIdFromResponse).getText();
+        By by = By.xpath(String.format("%s//div[contains(@class, 'wall_post_text')]", getDataPostId(userId, postIdFromResponse)));
+        Browser.setExplicitWait(by);
+        return new Label(by,"Text").getText();
     }
 
     public void likePost(String ownerId, int postId) {

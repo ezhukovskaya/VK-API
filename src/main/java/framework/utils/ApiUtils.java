@@ -25,10 +25,10 @@ public class ApiUtils {
     }
 
 
-    public static JsonNode postRequest(String url, String fileSrc){
+    public static JsonNode postRequest(String field, String url, String fileSrc){
         HttpResponse<JsonNode> jsonResponse = null;
         try{
-            jsonResponse = Unirest.post(url).field(Fields.PHOTO, new File(fileSrc)).asJson();
+            jsonResponse = Unirest.post(url).field(field, new File(fileSrc)).asJson();
         } catch (Exception e){
             e.getMessage();
         }

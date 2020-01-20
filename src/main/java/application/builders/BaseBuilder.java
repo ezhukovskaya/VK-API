@@ -10,12 +10,16 @@ import application.utils.VkApiUtils;
 abstract public class BaseBuilder {
     protected static final String AMP = "&";
 
-    protected static String getUploadUrl(String id, VkUser vkUser) {
-        return VkApiUtils.createWallUploadServer(id, vkUser).get(Fields.RESPONSE).get(Fields.UPLOAD_URL).textValue();
+    protected static String getUploadUrl(String url) {
+        return VkApiUtils.createWallUploadServer(url).get(Fields.RESPONSE).get(Fields.UPLOAD_URL).textValue();
     }
 
-    public static String createUploadUrl(String id, VkUser vkUser) {
-        return getUploadUrl(id, vkUser);
+    protected static String getDocUploadUrl(String id, VkUser vkUser){
+        return VkApiUtils.createDocUploadServer(id, vkUser).get(Fields.RESPONSE).get(Fields.UPLOAD_URL).textValue();
+    }
+
+    public static String createUploadUrl(String url) {
+        return getUploadUrl(url);
     }
 
     protected static String createOwnerId(String id) {

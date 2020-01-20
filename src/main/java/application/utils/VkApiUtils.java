@@ -18,10 +18,10 @@ public class VkApiUtils {
         return null;
     }
 
-    private static JsonNode getResponse(String url, String fileSrc) {
+    private static JsonNode getResponse(String field, String url, String fileSrc) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            com.mashape.unirest.http.JsonNode response = ApiUtils.postRequest(url, fileSrc);
+            com.mashape.unirest.http.JsonNode response = ApiUtils.postRequest(field, url, fileSrc);
             return objectMapper.readValue(response.toString(), JsonNode.class);
         } catch (Exception e) {
             e.printStackTrace();
@@ -29,8 +29,8 @@ public class VkApiUtils {
         return null;
     }
 
-    public static JsonNode uploadResponse(String fileSrc, String id, VkUser vkUser) {
-        return getResponse(BaseBuilder.createUploadUrl(id, vkUser), fileSrc);
+    public static JsonNode uploadResponse(String field, String url, String fileSrc) {
+        return getResponse(field, BaseBuilder.createUploadUrl(url), fileSrc);
     }
 
     public static JsonNode createWallPost(String id, String message, VkUser vkUser) {
@@ -41,8 +41,12 @@ public class VkApiUtils {
         return getResponse(WallPostBuilder.getWallPostRequest(id, message, mediaId, vkUser, field));
     }
 
-    public static JsonNode createWallUploadServer(String id, VkUser vkUser) {
-        return getResponse(PhotoUploadBuilder.getWallUploadRequest(id, vkUser));
+    public static JsonNode createWallUploadServer(String url) {
+        return getResponse(url);
+    }
+
+    public static JsonNode createDocUploadServer(String id, VkUser vkUser){
+        return getResponse(FileUploadBuilder.getWallUploadRequest(id,vkUser));
     }
 
     public static JsonNode createWallPostEdit(String id, int postId, String message, String mediaId, VkUser vkUser, String field) {

@@ -10,7 +10,10 @@ import org.testng.annotations.Test;
 import application.pageObjects.pages.MyPage;
 import application.steps.Steps;
 
+import java.util.UUID;
+
 public class TC2 extends BaseTest {
+    private String randomText = UUID.randomUUID().toString();
     @Test
     public void vkTest() {
         VkUser firstUser = Steps.getVkUser(UsersInfo.FIRST_USER_USERNAME, UsersInfo.FIRST_USER_PASSWORD, ApiInfo.ACCESS_TOKEN_USER1);
@@ -18,7 +21,7 @@ public class TC2 extends BaseTest {
         MyPage myPageFirstUser = new MyPage();
         String userPageLink = Steps.getUserPageAddress(myPageFirstUser);
         String firstUserId = Steps.getUserId(userPageLink);
-        int postId = Steps.getWallPostId(firstUser, firstUserId);
+        int postId = Steps.getWallPostId(firstUser, firstUserId, randomText);
         Steps.getPostText(firstUserId, postId, myPageFirstUser);
         myPageFirstUser.getPost().likePost(firstUserId, postId);
         Steps.logOut();

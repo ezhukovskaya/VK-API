@@ -9,13 +9,13 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 public class Base64Utils {
     private static final Logger log = Logger.getLogger(Base64Utils.class);
-    private static final String UTF_8 = "UTF-8";
 
     public static String getBase64EncodedImageByURL(String imageURL) {
-        log.info(String.format("Converting PNG from %s to Base64", imageURL));
+        log.info(String.format("Converting JPG from %s to Base64", imageURL));
         try {
             InputStream is = new URL(imageURL).openStream();
             byte[] bytes = IOUtils.toByteArray(is);
@@ -27,13 +27,13 @@ public class Base64Utils {
     }
 
     public static String getBase64EncodedImage(String imageSrc) {
-        log.info(String.format("Converting PNG %s to Base64", imageSrc));
+        log.info(String.format("Converting JPG %s to Base64", imageSrc));
         try {
             File file = new File(imageSrc);
             FileInputStream fileInputStream = new FileInputStream(file);
             byte[] bytes = new byte[(int) file.length()];
             fileInputStream.read(bytes);
-            return new String(Base64.encodeBase64(bytes), UTF_8);
+            return new String(Base64.encodeBase64(bytes), StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
         }

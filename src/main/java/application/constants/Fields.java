@@ -11,4 +11,7 @@ public class Fields {
     public static final String SERVER = "server";
     public static final String ID = "id";
     public static final String FILE = "file";
+    public static final String SIZES = "sizes";
+    public static final String TYPE = "type";
+    public static final String URL = "url";
 }

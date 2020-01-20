@@ -1,18 +1,19 @@
 package application.steps;
 
-import application.builders.BaseBuilder;
+import application.builders.FileUploadBuilder;
+import application.builders.PhotoUploadBuilder;
 import application.constants.Fields;
-import application.constants.VkOptions;
-import com.fasterxml.jackson.databind.JsonNode;
 import application.constants.URLs;
-import framework.browser.Browser;
+import application.constants.VkOptions;
 import application.models.VkUser;
-import framework.utils.Base64Utils;
-import org.apache.log4j.Logger;
 import application.pageObjects.pages.LoginPage;
 import application.pageObjects.pages.MyPage;
 import application.pageObjects.pages.UserFeed;
 import application.utils.VkApiUtils;
+import com.fasterxml.jackson.databind.JsonNode;
+import framework.browser.Browser;
+import framework.utils.Base64Utils;
+import org.apache.log4j.Logger;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -31,15 +32,15 @@ public class Steps {
     }
 
     private static JsonNode uploadPhotoOnServer(String imagePath, String ownerId, String groupId, VkUser vkUser) {
-        JsonNode jsonNode = VkApiUtils.uploadResponse(imagePath, ownerId, vkUser);
+        JsonNode jsonNode = VkApiUtils.uploadResponse(Fields.PHOTO, PhotoUploadBuilder.getWallUploadRequest(ownerId, vkUser), imagePath);
         String photoField = URLEncoder.encode(jsonNode.get(Fields.PHOTO).textValue().replaceAll("\\\\", ""), StandardCharsets.UTF_8);
         String hashField = jsonNode.get(Fields.HASH).toString().replace("\"", "");
         String serverField = jsonNode.get(Fields.SERVER).toString();
         return VkApiUtils.createWallSavePhotoRequest(photoField, ownerId, groupId, hashField, serverField, vkUser);
     }
 
-    private static JsonNode uploadFileOnServer(String filePath, String ownerId, String groupId, VkUser vkUser) {
-        JsonNode jsonNode = VkApiUtils.uploadResponse(filePath, ownerId, vkUser);
+    public static JsonNode uploadFileOnServer(String filePath, String ownerId, String groupId, VkUser vkUser) {
+        JsonNode jsonNode = VkApiUtils.uploadResponse(Fields.FILE, FileUploadBuilder.getWallUploadRequest(ownerId, vkUser), filePath);
         String fileField = URLEncoder.encode(jsonNode.get(Fields.FILE).textValue());
         return VkApiUtils.createWallSaveDocRequest(fileField, ownerId, groupId, vkUser);
     }
@@ -55,6 +56,27 @@ public class Steps {
         return getMediaIdFromResponse(response);
     }
 
+    public static JsonNode getJMediaId(String filePath, String ownerId, String groupId, VkUser vkUser) {
+        JsonNode jsonNode = uploadPhotoOnServer(filePath, ownerId, groupId, vkUser);
+        return jsonNode.findPath(Fields.RESPONSE);
+    }
+
+    private static JsonNode getSizes(JsonNode array){
+        if (array.isArray()) {
+            for (JsonNode arr : array) {
+                return arr.get(Fields.SIZES);
+            }
+        }
+        return null;
+    }
+
+    private static String getURI(JsonNode array){
+        if (array.isArray()) {
+            return array.get(array.size()-1).get(Fields.URL).textValue();
+        }
+        return null;
+    }
+
     public static boolean postWithPhoto(String imagePath, String id, String groupId, String mediaId, VkUser vkUser, String field, String imageUrl){
         String randomText = UUID.randomUUID().toString();
         VkApiUtils.createWallPost(id, randomText, mediaId, vkUser, field);
@@ -64,8 +86,11 @@ public class Steps {
     }
 
 
-    public static boolean postEditedWithPhotoWallPost(String imagePath, String ownerId, String groupId, VkUser vkUser, int postId, String newMessage, String imageUrl, String fileField, String mediaId) {
+    public static boolean postEditedWithPhotoWallPost(String imagePath, String ownerId, String groupId, VkUser vkUser, int postId, String newMessage, String fileField) {
+        JsonNode imageResponse = getJMediaId(imagePath, ownerId, groupId, vkUser);
+        String mediaId = getMediaIdFromResponse(imageResponse);
         VkApiUtils.createWallPostEdit(ownerId, postId, newMessage, mediaId, vkUser, fileField);
+        String imageUrl = getURI(getSizes(imageResponse));
         String localImage = Base64Utils.getBase64EncodedImage(imagePath);
         String remoteImage = Base64Utils.getBase64EncodedImageByURL(String.format(imageUrl, groupId, mediaId));
         return localImage.equals(remoteImage);
@@ -91,9 +116,8 @@ public class Steps {
         return link.substring(URLs.VK_COM.length() + 2);
     }
 
-    public static int getWallPostId(VkUser vkUser, String ownerId) {
-        String randomText = UUID.randomUUID().toString();
-        JsonNode jsonNode = VkApiUtils.createWallPost(ownerId, randomText, vkUser);
+    public static int getWallPostId(VkUser vkUser, String ownerId, String message) {
+        JsonNode jsonNode = VkApiUtils.createWallPost(ownerId, message, vkUser);
         return jsonNode.get(Fields.RESPONSE).get(Fields.POST_ID).asInt();
     }
 
