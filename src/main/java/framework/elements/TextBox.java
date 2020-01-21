@@ -2,8 +2,8 @@ package framework.elements;
 
 import framework.base.BaseElement;
 import framework.browser.Browser;
-import org.openqa.selenium.By;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
 
 public class TextBox extends BaseElement {
     static final Logger log = Logger.getLogger(TextBox.class);

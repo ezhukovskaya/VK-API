@@ -1,10 +1,10 @@
 package application.pageObjects.pages;
 
 import application.pageObjects.forms.Header;
+import application.pageObjects.forms.Post;
 import framework.base.BaseForm;
 import framework.elements.Label;
 import org.openqa.selenium.By;
-import application.pageObjects.forms.Post;
 
 public class MyPage extends BaseForm {
     private static By avatarBy = By.xpath("//img[contains(@class, 'page_avatar_img')]");
@@ -18,11 +18,11 @@ public class MyPage extends BaseForm {
         return new Header();
     }
 
-    public Post getPost(){
+    public Post getPost() {
         return new Post();
     }
 
-    public By getAvatarBy(){
+    public By getAvatarBy() {
         return avatarBy;
     }
 }

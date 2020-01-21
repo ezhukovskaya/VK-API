@@ -4,7 +4,7 @@ import application.pageObjects.forms.Menu;
 
 public class UserFeed {
 
-    public Menu getMenu(){
+    public Menu getMenu() {
         return new Menu();
     }
 }

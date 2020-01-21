@@ -3,13 +3,13 @@ package tests;
 import application.constants.ApiInfo;
 import application.constants.UsersInfo;
 import application.enums.LikeStatus;
-import framework.browser.Browser;
 import application.models.VkUser;
+import application.pageObjects.pages.MyPage;
+import application.steps.Steps;
+import framework.browser.Browser;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import application.pageObjects.pages.MyPage;
-import application.steps.Steps;
 
 import java.util.UUID;
 

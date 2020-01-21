@@ -3,7 +3,6 @@ package application.pageObjects.forms;
 import application.models.VkUser;
 import framework.elements.Button;
 import framework.elements.TextBox;
-import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 
 public class Authorization {

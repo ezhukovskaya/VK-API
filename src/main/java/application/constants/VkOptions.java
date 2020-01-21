@@ -1,5 +1,5 @@
 package application.constants;
 
 public class VkOptions {
-    public static final String LOG_OUT = "Выйти";
+    public static final String LOG_OUT = "top_logout_link";
 }

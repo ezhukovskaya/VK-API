@@ -14,6 +14,7 @@ import org.testng.annotations.Test;
 public class TC5 extends BaseTest {
     private static final Logger LOG = Logger.getLogger(TC1.class);
     private final String filePath = System.getProperty("user.dir") + "/src/main/java/application/resources/photo.jpg";
+    private final double IMAGE_ACCURACY = 70.0;
 
     @DataProvider(name = "users")
     public Object[][] getData() {
@@ -33,6 +34,6 @@ public class TC5 extends BaseTest {
         LOG.info("Checks if Post message matches text");
         Assert.assertTrue(myPage.getPost().getWallPostText(userId, postId).contains(postText), "Texts are different");
         LOG.info("Checks if the pic is the same as local");
-        Assert.assertTrue(Steps.isAttached(filePath, vkUser, userId, userId), "Pics are different");
+        Assert.assertTrue(Steps.isAttached(filePath, vkUser, userId, userId) >= IMAGE_ACCURACY, "Pics are different");
     }
 }

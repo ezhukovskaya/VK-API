@@ -1,9 +1,9 @@
 package application.pageObjects.pages;
 
+import application.pageObjects.forms.Authorization;
 import framework.base.BaseForm;
 import framework.elements.Label;
 import org.openqa.selenium.By;
-import application.pageObjects.forms.Authorization;
 
 public class LoginPage extends BaseForm {
 

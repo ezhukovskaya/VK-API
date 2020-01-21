@@ -48,7 +48,4 @@ abstract public class BaseBuilder {
         return String.format(URLs.DEV_VK_API, method);
     }
 
-    protected static String createFile(String src) {
-        return String.format(Parametres.FILE, src);
-    }
 }

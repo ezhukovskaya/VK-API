@@ -13,5 +13,3 @@ public abstract class BaseForm {
         return this.label.isDisplayed();
     }
 }
-
-

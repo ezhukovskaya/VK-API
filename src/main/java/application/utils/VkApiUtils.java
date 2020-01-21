@@ -1,10 +1,10 @@
 package application.utils;
 
 import application.builders.*;
+import application.models.VkUser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import framework.utils.ApiUtils;
-import application.models.VkUser;
 import org.apache.log4j.Logger;
 
 public class VkApiUtils {
@@ -16,7 +16,7 @@ public class VkApiUtils {
             String response = ApiUtils.postRequest(url);
             return objectMapper.readValue(response, JsonNode.class);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage());
         }
         return null;
     }
@@ -28,7 +28,7 @@ public class VkApiUtils {
             com.mashape.unirest.http.JsonNode response = ApiUtils.postRequest(field, url, fileSrc);
             return objectMapper.readValue(response.toString(), JsonNode.class);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage());
         }
         return null;
     }
@@ -49,10 +49,6 @@ public class VkApiUtils {
         return getResponse(url);
     }
 
-    public static JsonNode createDocUploadServer(String id, VkUser vkUser){
-        return getResponse(FileUploadBuilder.getWallUploadRequest(id,vkUser));
-    }
-
     public static JsonNode createWallPostEdit(String id, int postId, String message, String mediaId, VkUser vkUser, String field) {
         return getResponse(WallPostBuilder.getEditPostRequest(id, postId, message, mediaId, vkUser, field));
     }
@@ -61,8 +57,8 @@ public class VkApiUtils {
         return getResponse(PhotoUploadBuilder.getSaveWallPhotoRequest(photo, ownerId, groupId, hash, server, user));
     }
 
-    public static JsonNode createWallSaveDocRequest(String photo, String ownerId, String groupId, VkUser vkUser) {
-        return getResponse(FileUploadBuilder.getSaveWallFileRequest(photo, ownerId, groupId, vkUser));
+    public static JsonNode createWallSaveDocRequest(String photo, VkUser vkUser) {
+        return getResponse(FileUploadBuilder.getSaveWallFileRequest(photo, vkUser));
     }
 
     public static JsonNode createWallPostComment(int postId, String commentText, VkUser vkUser) {

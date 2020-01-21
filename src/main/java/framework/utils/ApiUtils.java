@@ -17,7 +17,7 @@ public class ApiUtils {
         try {
             jsonResponse = Unirest.post(url).asString();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage());
         }
         return jsonResponse.getBody();
     }
@@ -29,7 +29,7 @@ public class ApiUtils {
         try{
             jsonResponse = Unirest.post(url).field(field, new File(fileSrc)).asJson();
         } catch (Exception e){
-            e.getMessage();
+            LOG.error(e.getMessage());
         }
         return jsonResponse.getBody();
     }
