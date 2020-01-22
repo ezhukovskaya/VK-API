@@ -1,5 +1,6 @@
 package framework.browser;
 
+import application.constants.Paths;
 import framework.utils.PropertiesRead;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -11,8 +12,8 @@ import java.util.concurrent.TimeUnit;
 
 public class Browser {
     private static WebDriver driver;
-    private static final int TIMEOUT = Integer.parseInt(PropertiesRead.readFromFrameworkConfig("implicitlyTimeout"));
-    private static final int EXPLICIT_TIMEOUT = Integer.parseInt(PropertiesRead.readFromFrameworkConfig("explicitTimeout"));
+    private static final int TIMEOUT = Integer.parseInt(PropertiesRead.readFromFrameworkConfig("implicitlyTimeout", Paths.FRAMEWORK_PROPERTY));
+    private static final int EXPLICIT_TIMEOUT = Integer.parseInt(PropertiesRead.readFromFrameworkConfig("explicitTimeout", Paths.FRAMEWORK_PROPERTY));
 
 
     private static final Logger log = Logger.getLogger(Browser.class);

@@ -11,11 +11,10 @@ import java.util.Properties;
 
 public class PropertiesRead {
     private static Properties prop = new Properties();
-    private static String path = "src/main/resources/config.properties";
     private static final Logger LOG = Logger.getLogger(PropertiesRead.class);
 
 
-    public static String readFromFrameworkConfig(String key) {
+    public static String readFromFrameworkConfig(String key, String path) {
         try {
             InputStream input = new FileInputStream(path);
             prop.load(new InputStreamReader(input, StandardCharsets.UTF_8));

@@ -1,5 +1,6 @@
 package framework.browser;
 
+import application.constants.Paths;
 import framework.enums.BrowserList;
 import framework.enums.RemoteStatus;
 import framework.utils.PropertiesRead;
@@ -23,9 +24,9 @@ public class BrowserFactory {
 
 
     public static WebDriver getBrowser() {
-        String language = PropertiesRead.readFromFrameworkConfig("language");
-        String browserName = PropertiesRead.readFromFrameworkConfig("browser");
-        String remoteStatusName = PropertiesRead.readFromFrameworkConfig("remote");
+        String language = PropertiesRead.readFromFrameworkConfig("language", Paths.FRAMEWORK_PROPERTY);
+        String browserName = PropertiesRead.readFromFrameworkConfig("browser", Paths.FRAMEWORK_PROPERTY);
+        String remoteStatusName = PropertiesRead.readFromFrameworkConfig("remote", Paths.FRAMEWORK_PROPERTY);
         LOG.info("Language of web-site is " + language);
         BrowserList browserList = BrowserList.valueOf(browserName.toUpperCase());
         RemoteStatus remoteStatus = RemoteStatus.valueOf(remoteStatusName.toUpperCase());
@@ -49,12 +50,12 @@ public class BrowserFactory {
     }
 
     private static RemoteWebDriver getSelenoidDriver(String browserName) {
-        String version = PropertiesRead.readFromFrameworkConfig("version");
+        String version = PropertiesRead.readFromFrameworkConfig("version", Paths.FRAMEWORK_PROPERTY);
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setBrowserName(browserName.toLowerCase());
         capabilities.setVersion(version);
         try {
-            return new RemoteWebDriver(URI.create(PropertiesRead.readFromFrameworkConfig("selenoidUrl")).toURL(), capabilities);
+            return new RemoteWebDriver(URI.create(PropertiesRead.readFromFrameworkConfig("selenoidUrl", Paths.FRAMEWORK_PROPERTY)).toURL(), capabilities);
         } catch (MalformedURLException e) {
             e.getStackTrace();
         }

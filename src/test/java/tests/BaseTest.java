@@ -1,5 +1,6 @@
 package tests;
 
+import application.constants.Paths;
 import application.constants.URLs;
 import framework.browser.Browser;
 import framework.utils.PropertiesRead;
@@ -10,7 +11,7 @@ import org.testng.annotations.BeforeTest;
 abstract public class BaseTest {
     @BeforeTest
     public void init() {
-        PropertyConfigurator.configure(PropertiesRead.readFromFrameworkConfig("logfile"));
+        PropertyConfigurator.configure(PropertiesRead.readFromFrameworkConfig("logfile", Paths.FRAMEWORK_PROPERTY));
         Browser.getBrowser();
         Browser.setImplicitlyWait();
         Browser.goToUrl(URLs.VK_COM);
