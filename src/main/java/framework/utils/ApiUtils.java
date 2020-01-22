@@ -9,7 +9,7 @@ import java.io.File;
 
 public class ApiUtils {
 
-    static final Logger LOG = Logger.getLogger(ApiUtils.class);
+    private static final Logger LOG = Logger.getLogger(ApiUtils.class);
 
     public static String postRequest(String url) {
         HttpResponse<String> jsonResponse = null;

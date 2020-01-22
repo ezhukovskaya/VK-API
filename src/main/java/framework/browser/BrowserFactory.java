@@ -45,7 +45,7 @@ public class BrowserFactory {
             case REMOTE:
                 return getSelenoidDriver(browserName);
             default:
-                throw new IllegalStateException("Incorrect browser name in configuration file");
+                throw new IllegalStateException("Please, Install driver for Chrome or Firefox Browser or Selenoid");
         }
     }
 

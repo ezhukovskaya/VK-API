@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 
 public class VkApiUtils {
     private static final Logger LOG = Logger.getLogger(VkApiUtils.class);
+
     private static JsonNode getResponse(String url) {
         ObjectMapper objectMapper = new ObjectMapper();
         LOG.info("Gets response body");
@@ -49,8 +50,8 @@ public class VkApiUtils {
         return getResponse(url);
     }
 
-    public static JsonNode createWallPostEdit(String id, int postId, String message, String mediaId, VkUser vkUser, String field) {
-        return getResponse(WallPostBuilder.getEditPostRequest(id, postId, message, mediaId, vkUser, field));
+    public static void createWallPostEdit(String id, int postId, String message, String mediaId, VkUser vkUser, String field) {
+        getResponse(WallPostBuilder.getEditPostRequest(id, postId, message, mediaId, vkUser, field));
     }
 
     public static JsonNode createWallSavePhotoRequest(String photo, String ownerId, String groupId, String hash, String server, VkUser user) {
@@ -69,7 +70,7 @@ public class VkApiUtils {
         return getResponse(LikeBuilder.createIsPostLikedRequest(ownerId, userId, itemId, vkUser));
     }
 
-    public static JsonNode createWallPostDeleteRequest(String ownerId, int postId, VkUser vkUser) {
-        return getResponse(WallPostBuilder.getDeleteWallPostRequest(ownerId, postId, vkUser));
+    public static void createWallPostDeleteRequest(String ownerId, int postId, VkUser vkUser) {
+        getResponse(WallPostBuilder.getDeleteWallPostRequest(ownerId, postId, vkUser));
     }
 }

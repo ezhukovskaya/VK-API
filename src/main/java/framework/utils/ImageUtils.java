@@ -9,8 +9,8 @@ import java.io.File;
 import java.net.URL;
 
 public class ImageUtils {
-    static final Logger LOG = Logger.getLogger(ImageUtils.class);
-    static final int ONE_HUNDRED = 100;
+    private static final Logger LOG = Logger.getLogger(ImageUtils.class);
+    private static final int ONE_HUNDRED = 100;
 
     public static float compareImage(String filePath, String fileUrl) {
         LOG.info("Detecting percentage difference");

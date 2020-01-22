@@ -12,9 +12,8 @@ abstract public class BaseTest {
     @BeforeTest
     public void init() {
         PropertyConfigurator.configure(PropertiesRead.readFromFrameworkConfig("logfile", Paths.FRAMEWORK_PROPERTY));
-        Browser.getBrowser();
         Browser.setImplicitlyWait();
-        Browser.goToUrl(URLs.VK_COM);
+        Browser.goToUrl(URLs.URL);
         Browser.maximize();
     }
 
