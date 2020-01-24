@@ -23,7 +23,7 @@ public class TC3 extends BaseTest{
         MyPage myPageFirstUser = new MyPage();
         String userPageLink = UserWork.getUserPageAddress(myPageFirstUser);
         String firstUserId = UserWork.getUserId(userPageLink);
-        int postId = WallWork.getWallPostId(firstUser, firstUserId, randomText);
+        String postId = WallWork.getWallPostId(firstUser, firstUserId, randomText);
         WallWork.getPostText(firstUserId, postId, myPageFirstUser);
         myPageFirstUser.getPost().likePost(firstUserId, postId);
         UserWork.logOut();

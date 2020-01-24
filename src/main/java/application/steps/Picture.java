@@ -1,7 +1,8 @@
 package application.steps;
 
-import application.builders.PhotoUploadBuilder;
+import application.builders.BaseBuilder;
 import application.constants.ExtraSymbol;
+import application.constants.Parameters;
 import application.constants.Fields;
 import application.models.VkUser;
 import application.utils.VkApiUtils;
@@ -19,7 +20,7 @@ public class Picture {
 
     private static JsonNode uploadPhotoOnServer(String imagePath, String ownerId, String groupId, VkUser vkUser) {
         LOG.info("Gets response to upload photo");
-        JsonNode jsonNode = VkApiUtils.uploadResponse(Fields.PHOTO, PhotoUploadBuilder.getWallUploadRequest(ownerId, vkUser), imagePath);
+        JsonNode jsonNode = VkApiUtils.uploadResponse(Parameters.PHOTO, BaseBuilder.getWallUploadRequest(ownerId, vkUser), imagePath);
         LOG.info("Encodes photoField to " + StandardCharsets.UTF_8);
         String photoField = URLEncoder.encode(jsonNode.get(Fields.PHOTO).textValue().replaceAll(ExtraSymbol.BACKSLASH, ExtraSymbol.EMPTY), StandardCharsets.UTF_8);
         LOG.info("Gets hash from the response");
@@ -67,7 +68,7 @@ public class Picture {
         return VkApiUtils.createWallPost(ownerId, randomText, mediaId, vkUser, field);
     }
 
-    public static float postEditedWithPhotoWallPost(String imagePath, String ownerId, String groupId, VkUser vkUser, int postId, String newMessage, String fileField) {
+    public static float postEditedWithPhotoWallPost(String imagePath, String ownerId, String groupId, VkUser vkUser, String postId, String newMessage, String fileField) {
         LOG.info("Gets image response");
         JsonNode imageResponse = getJsonMediaId(imagePath, ownerId, groupId, vkUser);
         LOG.info("Gets media id");
@@ -87,10 +88,10 @@ public class Picture {
         return ImageUtils.compareImage(imagePath, imageUrl);
     }
 
-    public static int getPostId(String imagePath, VkUser vkUser, String ownerId, String groupId, String field) {
+    public static String getPostId(String imagePath, VkUser vkUser, String ownerId, String groupId, String field) {
         JsonNode imageResponse = getJsonMediaId(imagePath, ownerId, groupId, vkUser);
         String mediaId = getMediaIdFromResponse(imageResponse);
         JsonNode response = getWallPostWithAttachment(vkUser, ownerId, mediaId, field);
-        return response.get(Fields.RESPONSE).get(Fields.POST_ID).asInt();
+        return response.get(Fields.RESPONSE).get(Fields.POST_ID).toString();
     }
 }

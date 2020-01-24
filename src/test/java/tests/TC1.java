@@ -1,6 +1,7 @@
 package tests;
 
 import application.constants.ApiInfo;
+import application.constants.Parameters;
 import application.constants.Fields;
 import application.constants.UsersInfo;
 import application.enums.LikeStatus;
@@ -30,24 +31,24 @@ public class TC1 extends BaseTest {
         MyPage myPageFirstUser = new MyPage();
         String userPageLink = UserWork.getUserPageAddress(myPageFirstUser);
         String firstUserId = UserWork.getUserId(userPageLink);
-        int postId = WallWork.getWallPostId(firstUser, firstUserId, randomText);
+        String postId = WallWork.getWallPostId(firstUser, firstUserId, randomText);
         Assert.assertTrue(myPageFirstUser.getPost().wallPostIsFromRightUser(firstUserId, postId), String.format("Post is not from %s", firstUser.getUsername()));
         LOG.info(String.format("Checks if Post message matches %s", randomText));
         Assert.assertEquals(randomText, myPageFirstUser.getPost().getWallPostText(firstUserId, postId), "Texts are different");
         LOG.info("Checks if the pic is the same as local");
-        Assert.assertTrue(Picture.postEditedWithPhotoWallPost(imagePath, firstUserId, firstUserId, firstUser, postId, NEW_TEXT, Fields.PHOTO) >= IMAGE_ACCURACY, "Pics are different");
+        Assert.assertTrue(Picture.postEditedWithPhotoWallPost(imagePath, firstUserId, firstUserId, firstUser, postId, NEW_TEXT, Parameters.PHOTO) >= IMAGE_ACCURACY, "Pics are different");
         LOG.info("Checks if randomText is not the same");
         Assert.assertNotEquals(randomText, myPageFirstUser.getPost().getWallPostText(firstUserId, postId), "Text has not changed");
-        int commentId = WallWork.getWallCommentId(postId, firstUser);
+        String commentId = WallWork.getWallCommentId(postId, firstUser);
         LOG.info("Checks if Comment is from right user");
         Assert.assertTrue(myPageFirstUser.getPost().commentIsFromRightUser(firstUser, commentId, firstUserId, postId), String.format("Comment is not from %s", firstUser.getUsername()));
         LOG.info("Like post");
         myPageFirstUser.getPost().likePost(firstUserId, postId);
-        int liked = WallWork.getLikeStatus(firstUserId, firstUserId, postId, firstUser);
+        int liked = WallWork.getLikeStatus(firstUserId, firstUserId, postId, firstUser, Fields.POST);
         LOG.info("Checks if like status is 'LIKED'");
-        Assert.assertEquals(liked, LikeStatus.LIKED.getValue(), String.format("User id=%s did not like item id=%d", firstUserId, postId));
+        Assert.assertEquals(liked, LikeStatus.LIKED.getValue(), String.format("User id=%s did not like item id=%s", firstUserId, postId));
         LOG.info("Gets response from deleting wall post");
         VkApiUtils.createWallPostDeleteRequest(firstUserId, postId, firstUser);
-        Assert.assertFalse(myPageFirstUser.getPost().isExists(firstUserId, postId), String.format("Post id=%d is not deleted", postId));
+        Assert.assertFalse(myPageFirstUser.getPost().isExists(firstUserId, postId), String.format("Post id=%s is not deleted", postId));
     }
 }

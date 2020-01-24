@@ -7,10 +7,8 @@ import application.pageObjects.pages.LoginPage;
 import application.pageObjects.pages.MyPage;
 import application.pageObjects.pages.UserFeed;
 import framework.browser.Browser;
-import org.apache.log4j.Logger;
 
 public class UserWork {
-    private static final Logger LOG = Logger.getLogger(UserWork.class);
 
 
     public static VkUser getVkUser(String username, String password, String accessToken) {

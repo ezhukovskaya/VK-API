@@ -1,7 +1,7 @@
 package tests;
 
 import application.constants.ApiInfo;
-import application.constants.Fields;
+import application.constants.Parameters;
 import application.constants.UsersInfo;
 import application.models.VkUser;
 import application.pageObjects.pages.MyPage;
@@ -31,7 +31,7 @@ public class TC5 extends BaseTest {
         MyPage myPage = new MyPage();
         String userPageLink = UserWork.getUserPageAddress(myPage);
         String userId = UserWork.getUserId(userPageLink);
-        int postId = Picture.getPostId(filePath, vkUser, userId, userId, Fields.PHOTO);
+        String postId = Picture.getPostId(filePath, vkUser, userId, userId, Parameters.PHOTO);
         String postText = WallWork.getPostText(userId, postId, myPage);
         LOG.info("Checks if Post message matches text");
         Assert.assertTrue(myPage.getPost().getWallPostText(userId, postId).contains(postText), "Texts are different");

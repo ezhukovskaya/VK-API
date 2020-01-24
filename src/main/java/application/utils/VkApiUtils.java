@@ -55,19 +55,19 @@ public class VkApiUtils {
     }
 
     public static JsonNode createWallSavePhotoRequest(String photo, String ownerId, String groupId, String hash, String server, VkUser user) {
-        return getResponse(PhotoUploadBuilder.getSaveWallPhotoRequest(photo, ownerId, groupId, hash, server, user));
+        return getResponse(BaseBuilder.getSaveWallPhotoRequest(photo, ownerId, groupId, hash, server, user));
     }
 
     public static JsonNode createWallSaveDocRequest(String photo, VkUser vkUser) {
-        return getResponse(FileUploadBuilder.getSaveWallFileRequest(photo, vkUser));
+        return getResponse(BaseBuilder.getSaveWallFileRequest(photo, vkUser));
     }
 
     public static JsonNode createWallPostComment(String postId, String commentText, VkUser vkUser) {
         return getResponse(WallPostBuilder.getAddCommentRequest(postId, commentText, vkUser));
     }
 
-    public static JsonNode createIsLikedRequest(String ownerId, String userId, String itemId, VkUser vkUser) {
-        return getResponse(LikeBuilder.createIsPostLikedRequest(ownerId, userId, itemId, vkUser));
+    public static JsonNode createIsLikedRequest(String ownerId, String userId, String itemId, VkUser vkUser, String type) {
+        return getResponse(BaseBuilder.createIsPostLikedRequest(ownerId, userId, itemId, vkUser, type));
     }
 
     public static void createWallPostDeleteRequest(String ownerId, String postId, VkUser vkUser) {

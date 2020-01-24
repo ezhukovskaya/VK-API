@@ -1,6 +1,7 @@
 package tests;
 
 import application.constants.ApiInfo;
+import application.constants.Fields;
 import application.constants.UsersInfo;
 import application.enums.LikeStatus;
 import application.models.VkUser;
@@ -24,7 +25,7 @@ public class TC2 extends BaseTest {
         MyPage myPage = new MyPage();
         String userPageLink = UserWork.getUserPageAddress(myPage);
         String firstUserId = UserWork.getUserId(userPageLink);
-        int postId = WallWork.getWallPostId(firstUser, firstUserId, randomText);
+        String postId = WallWork.getWallPostId(firstUser, firstUserId, randomText);
         WallWork.getPostText(firstUserId, postId, myPage);
         myPage.getPost().likePost(firstUserId, postId);
         UserWork.logOut();
@@ -39,8 +40,8 @@ public class TC2 extends BaseTest {
         LOG.info(String.format("Checks if Post message matches %s", randomText));
         Assert.assertTrue(myPage.getPost().getWallPostText(firstUserId, postId).contains(postText), "Texts are different");
         myPage.getPost().likePost(firstUserId, postId);
-        int firstUserLikedFirst = WallWork.getLikeStatus(firstUserId, firstUserId, postId, firstUser);
-        int secondUserLikedFirst = WallWork.getLikeStatus(firstUserId, secondUserId, postId, secondUser);
+        int firstUserLikedFirst = WallWork.getLikeStatus(firstUserId, firstUserId, postId, firstUser, Fields.POST);
+        int secondUserLikedFirst = WallWork.getLikeStatus(firstUserId, secondUserId, postId, secondUser, Fields.POST);
         LOG.info("Checks if like status is 'LIKED'");
         Assert.assertEquals(firstUserLikedFirst, LikeStatus.LIKED.getValue(), String.format("User id=%s did not like item id=%d", firstUserId, postId));
         LOG.info("Checks if like status is 'LIKED'");
