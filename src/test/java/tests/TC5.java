@@ -1,6 +1,5 @@
 package tests;
 
-import application.constants.ApiInfo;
 import application.constants.Parameters;
 import application.constants.UsersInfo;
 import application.models.VkUser;
@@ -20,8 +19,8 @@ public class TC5 extends BaseTest {
 
     @DataProvider(name = "users")
     public Object[][] getData() {
-        VkUser firstUser = UserWork.getVkUser(UsersInfo.FIRST_USER_USERNAME, UsersInfo.FIRST_USER_PASSWORD, ApiInfo.ACCESS_TOKEN_USER1);
-        VkUser secondUser = UserWork.getVkUser(UsersInfo.SECOND_USER_USERNAME, UsersInfo.SECOND_USER_PASSWORD, ApiInfo.ACCESS_TOKEN_USER2);
+        VkUser firstUser = UserWork.getVkUser(UsersInfo.FIRST_USER_USERNAME, UsersInfo.FIRST_USER_PASSWORD, UsersInfo.ACCESS_TOKEN_USER1);
+        VkUser secondUser = UserWork.getVkUser(UsersInfo.SECOND_USER_USERNAME, UsersInfo.SECOND_USER_PASSWORD, UsersInfo.ACCESS_TOKEN_USER2);
         return new Object[][]{{firstUser}, {secondUser}};
     }
 

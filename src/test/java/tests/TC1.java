@@ -26,7 +26,7 @@ public class TC1 extends BaseTest {
 
     @Test
     public void vkTest() {
-        VkUser firstUser = UserWork.getVkUser(UsersInfo.FIRST_USER_USERNAME, UsersInfo.FIRST_USER_PASSWORD, ApiInfo.ACCESS_TOKEN_USER1);
+        VkUser firstUser = UserWork.getVkUser(UsersInfo.FIRST_USER_USERNAME, UsersInfo.FIRST_USER_PASSWORD, UsersInfo.ACCESS_TOKEN_USER1);
         UserWork.authorization(firstUser);
         MyPage myPageFirstUser = new MyPage();
         String userPageLink = UserWork.getUserPageAddress(myPageFirstUser);

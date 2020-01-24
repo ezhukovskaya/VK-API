@@ -20,7 +20,7 @@ public class TC2 extends BaseTest {
     private String randomText = UUID.randomUUID().toString();
     @Test
     public void vkTest() {
-        VkUser firstUser = UserWork.getVkUser(UsersInfo.FIRST_USER_USERNAME, UsersInfo.FIRST_USER_PASSWORD, ApiInfo.ACCESS_TOKEN_USER1);
+        VkUser firstUser = UserWork.getVkUser(UsersInfo.FIRST_USER_USERNAME, UsersInfo.FIRST_USER_PASSWORD, UsersInfo.ACCESS_TOKEN_USER1);
         UserWork.authorization(firstUser);
         MyPage myPage = new MyPage();
         String userPageLink = UserWork.getUserPageAddress(myPage);
@@ -29,7 +29,7 @@ public class TC2 extends BaseTest {
         WallWork.getPostText(firstUserId, postId, myPage);
         myPage.getPost().likePost(firstUserId, postId);
         UserWork.logOut();
-        VkUser secondUser = UserWork.getVkUser(UsersInfo.SECOND_USER_USERNAME, UsersInfo.SECOND_USER_PASSWORD, ApiInfo.ACCESS_TOKEN_USER2);
+        VkUser secondUser = UserWork.getVkUser(UsersInfo.SECOND_USER_USERNAME, UsersInfo.SECOND_USER_PASSWORD, UsersInfo.ACCESS_TOKEN_USER2);
         UserWork.authorization(secondUser);
         String secondUserPageLink = UserWork.getUserPageAddress(myPage);
         String secondUserId = UserWork.getUserId(secondUserPageLink);
