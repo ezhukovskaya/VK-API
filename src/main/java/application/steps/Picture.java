@@ -2,8 +2,8 @@ package application.steps;
 
 import application.builders.BaseBuilder;
 import application.constants.ExtraSymbol;
-import application.constants.Parameters;
 import application.constants.Fields;
+import application.constants.Parameters;
 import application.models.VkUser;
 import application.utils.VkApiUtils;
 import com.fasterxml.jackson.databind.JsonNode;

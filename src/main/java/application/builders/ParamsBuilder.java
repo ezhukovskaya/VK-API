@@ -5,8 +5,8 @@ import java.util.Map;
 
 public class ParamsBuilder {
 
-    private  Map<String, String> builder = new HashMap<>();
     protected final String AMP = "&";
+    private Map<String, String> builder = new HashMap<>();
 
 
     public ParamsBuilder(String key, String value) {

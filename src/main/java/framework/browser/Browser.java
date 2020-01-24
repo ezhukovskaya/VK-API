@@ -11,13 +11,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.concurrent.TimeUnit;
 
 public class Browser {
-    private static WebDriver driver;
     private static final int TIMEOUT = Integer.parseInt(PropertiesRead.readFromFrameworkConfig("implicitlyTimeout", Paths.FRAMEWORK_PROPERTY));
     private static final int EXPLICIT_TIMEOUT = Integer.parseInt(PropertiesRead.readFromFrameworkConfig("explicitTimeout", Paths.FRAMEWORK_PROPERTY));
-
-
     private static final Logger log = Logger.getLogger(Browser.class);
-
+    private static WebDriver driver;
 
     public static WebDriver getBrowser() {
         if (driver == null) {

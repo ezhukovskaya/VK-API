@@ -9,9 +9,9 @@ import java.util.List;
 
 public abstract class BaseElement {
 
+    private static final Logger log = Logger.getLogger(BaseElement.class);
     protected By elementLocator;
     protected String elementName;
-    private static final Logger log = Logger.getLogger(BaseElement.class);
 
     public BaseElement(By locator, String name) {
         this.elementLocator = locator;

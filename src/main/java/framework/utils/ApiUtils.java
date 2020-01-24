@@ -23,12 +23,12 @@ public class ApiUtils {
     }
 
 
-    public static JsonNode postRequest(String field, String url, String fileSrc){
+    public static JsonNode postRequest(String field, String url, String fileSrc) {
         HttpResponse<JsonNode> jsonResponse = null;
         LOG.info("Post " + url);
-        try{
+        try {
             jsonResponse = Unirest.post(url).field(field, new File(fileSrc)).asJson();
-        } catch (Exception e){
+        } catch (Exception e) {
             LOG.error(e.getMessage());
         }
         return jsonResponse.getBody();

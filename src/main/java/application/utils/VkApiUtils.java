@@ -1,6 +1,7 @@
 package application.utils;
 
-import application.builders.*;
+import application.builders.BaseBuilder;
+import application.builders.WallPostBuilder;
 import application.models.VkUser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

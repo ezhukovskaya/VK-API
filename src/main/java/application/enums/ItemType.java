@@ -9,5 +9,5 @@ public enum ItemType {
     NOTE,
     PHOTO_COMMENT,
     VIDEO_COMMENT,
-    TOPIC_COMMENT;
+    TOPIC_COMMENT
 }

@@ -10,9 +10,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
 public class PropertiesRead {
-    private static Properties prop = new Properties();
     private static final Logger LOG = Logger.getLogger(PropertiesRead.class);
-
+    private static Properties prop = new Properties();
 
     public static String readFromFrameworkConfig(String key, String path) {
         try {

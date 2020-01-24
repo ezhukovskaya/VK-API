@@ -11,7 +11,7 @@ public class Header {
         return new Options();
     }
 
-    public void clickOption(){
+    public void clickOption() {
         options.click();
     }
 }
