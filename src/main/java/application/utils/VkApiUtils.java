@@ -35,7 +35,7 @@ public class VkApiUtils {
     }
 
     public static JsonNode uploadResponse(String field, String url, String fileSrc) {
-        return getResponse(field, BaseBuilder.createUploadUrl(url), fileSrc);
+        return getResponse(field, BaseBuilder.getUploadUrl(url), fileSrc);
     }
 
     public static JsonNode createWallPost(String id, String message, VkUser vkUser) {
@@ -50,7 +50,7 @@ public class VkApiUtils {
         return getResponse(url);
     }
 
-    public static void createWallPostEdit(String id, int postId, String message, String mediaId, VkUser vkUser, String field) {
+    public static void createWallPostEdit(String id, String postId, String message, String mediaId, VkUser vkUser, String field) {
         getResponse(WallPostBuilder.getEditPostRequest(id, postId, message, mediaId, vkUser, field));
     }
 
@@ -62,15 +62,15 @@ public class VkApiUtils {
         return getResponse(FileUploadBuilder.getSaveWallFileRequest(photo, vkUser));
     }
 
-    public static JsonNode createWallPostComment(int postId, String commentText, VkUser vkUser) {
+    public static JsonNode createWallPostComment(String postId, String commentText, VkUser vkUser) {
         return getResponse(WallPostBuilder.getAddCommentRequest(postId, commentText, vkUser));
     }
 
-    public static JsonNode createIsLikedRequest(String ownerId, String userId, int itemId, VkUser vkUser) {
+    public static JsonNode createIsLikedRequest(String ownerId, String userId, String itemId, VkUser vkUser) {
         return getResponse(LikeBuilder.createIsPostLikedRequest(ownerId, userId, itemId, vkUser));
     }
 
-    public static void createWallPostDeleteRequest(String ownerId, int postId, VkUser vkUser) {
+    public static void createWallPostDeleteRequest(String ownerId, String postId, VkUser vkUser) {
         getResponse(WallPostBuilder.getDeleteWallPostRequest(ownerId, postId, vkUser));
     }
 }

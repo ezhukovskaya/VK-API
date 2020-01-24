@@ -9,9 +9,8 @@ import org.apache.log4j.Logger;
 
 abstract public class BaseBuilder {
     private static final Logger LOG = Logger.getLogger(BaseBuilder.class);
-    protected static final String AMP = "&";
 
-    public static String createUploadUrl(String url) {
+    public static String getUploadUrl(String url) {
         LOG.info(String.format("Get upload URL for %s ", url));
         return VkApiUtils.createWallUploadServer(url).get(Fields.RESPONSE).get(Fields.UPLOAD_URL).textValue();
     }
@@ -20,12 +19,12 @@ abstract public class BaseBuilder {
         return createField(Fields.ACCESS_TOKEN, vkUser.getAccessToken()) + createField(Fields.VERSION, ApiInfo.API_VERSION);
     }
 
-    protected static String createField(String key, String value) {
-        return new ParamsBuilder(key, value).toString();
+    protected static String createRequiredFieldForPhoto(String server, String hash, String photo) {
+        return createField(Parametres.SERVER, server) + createField(Parametres.HASH, server) + createField(Parametres.PHOTO, photo);
     }
 
-    protected static String createVersion() {
-        return String.format(Parametres.VERSION, ApiInfo.API_VERSION);
+    protected static String createField(String key, String value) {
+        return new ParamsBuilder(key, value).toString();
     }
 
 }
