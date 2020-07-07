@@ -35,7 +35,7 @@ public class Browser {
 
     public static void close() {
         log.info("Browser closes");
-        getBrowser().close();
+        getBrowser().quit();
     }
 
     public static void setImplicitlyWait() {
